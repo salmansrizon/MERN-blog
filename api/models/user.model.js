@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamp: true } //to store user input timeline
+  { timestamps: true } //to store user input timeline
 );
 
 // Initiating Model
