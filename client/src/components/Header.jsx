@@ -11,9 +11,9 @@ export default function Header() {
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
       >
-        <spna className="px-2 py-1 bg-gradient-to-r from-indigo-400 via-purple-400 to-red-400 rounded-lg text-white">
+        <span className="px-2 py-1 bg-gradient-to-r from-indigo-400 via-purple-400 to-red-400 rounded-lg text-white">
           Salman's
-        </spna>
+        </span>
         Blog
       </Link>
       <form>
