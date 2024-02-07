@@ -58,13 +58,13 @@ export const signin = async (req, res, next) => {
     }
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     // password hashing 
-    const {password: pass, ...rest} = validUser._doc;
+    const {password: pass, ...rest} = validUser._doc; //Separaing password and rest of the element from responce json
     res
       .status(200)
       .cookie("access_token", token, {
         httpOnly: true,
       })
-      .json(rest);
+      .json(rest); // provied signup responce without password
   } catch (error) {
     next(error);
   }
