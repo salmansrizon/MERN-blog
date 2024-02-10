@@ -19,4 +19,4 @@ jobs:
         node-version: 16.x
     - run: npm install
     - run: npm test
-    - run: pm2 restart app-name
+    - run: pm2 restart MERN-blog
