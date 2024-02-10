@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
+import path from 'path';
 
 // initiating credential from enviornment veriable
 dotenv.config();
@@ -17,6 +18,9 @@ mongoose
     console.log(err); //database auth error
   });
 
+  // setting up dynamic dir path
+  const __dirname = path.resolve();
+
 // initiate express
 const app = express();
 // allowing json request
@@ -30,6 +34,13 @@ app.listen(3000, () => {
 app.use("/api/user", userRoutes);
 // AUth route
 app.use("/api/auth", authRoutes);
+
+// for creating building dir in serverdeployment
+app.use(express.static(path.join(__dirname,'/client/dist')));
+// for invalid url selecting to default route to indexedDB.html
+app.get('*', (req,res) => {
+  res.sendFile(path.join(__dirname,'client','dist','index.html'));
+});
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
