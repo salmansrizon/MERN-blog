@@ -1,4 +1,4 @@
-import {  Alert, Button, Modal, ModalBody, TextInput } from "flowbite-react";
+import { Alert, Button, Modal, ModalBody, TextInput } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -8,9 +8,8 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);

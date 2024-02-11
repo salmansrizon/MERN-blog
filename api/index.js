@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import path from 'path';
-
+import cookieParser from "cookie-parser"; //for cookie management
 // initiating credential from enviornment veriable
 dotenv.config();
 
@@ -25,6 +25,8 @@ mongoose
 const app = express();
 // allowing json request
 app.use(express.json());
+// inititalize cookie perser
+app.use(cookieParser()); //this is for extract cookie form the browser
 
 app.listen(3000, () => {
   console.log("Server is running at 3000!");
