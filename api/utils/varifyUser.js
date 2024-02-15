@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import { errorHandler } from "./error.js";
-import User from "../models/user.model.js";
 
 // chaecking cookies for the user
 export const varifyToken = (req, res, next) => {
