@@ -2,6 +2,7 @@ import { useEffect, userEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
+import DashPost from "../components/DashPost";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -9,7 +10,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const tabFromUrl = urlParams.get('tab'); // getting the tab url form clicking
+    const tabFromUrl = urlParams.get("tab"); // getting the tab url form clicking
     if (tabFromUrl) {
       setTab(tabFromUrl);
     }
@@ -22,6 +23,7 @@ export default function Dashboard() {
       </div>
       {/* profile */}
       {tab === "profile" && <DashProfile />}
+      {tab === "posts" && <DashPost />}
     </div>
   );
 }
