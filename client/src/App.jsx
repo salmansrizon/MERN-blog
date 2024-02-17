@@ -5,7 +5,7 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Project from "./pages/project";
 import Dashboard from "./pages/dashboard";
-import CreatePost from "./pages/CraetePost";
+import CreatePost from "./pages/CreatePost";
 import PrivateRoute from "./components/privateRoute";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminprivateRoute";
 import Header from "./components/Header";
