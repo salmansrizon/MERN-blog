@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export default function DashPosts() {
   const { currentUser } = useSelector((state) => state.user);
   const [userPosts, setuserPosts] = useState([]);
+  const [showMore, setShowMore] = useState(true);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -13,6 +14,9 @@ export default function DashPosts() {
         const data = await res.json();
         if (res.ok) {
           setuserPosts(data.posts);
+          if (data.posts.length < 9) {
+            setShowMore(false);
+          }
         }
       } catch (error) {
         console.log(error.message);
@@ -22,11 +26,28 @@ export default function DashPosts() {
       fetchPosts();
     }
   }, [currentUser._id]);
+
+  const handleShowMore = async () => {
+    const startIndex = userPosts.length;
+    try{
+      const res = await fetch(`/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`);
+      const data = await res.json();
+      if(res.ok){
+        setuserPosts((prev) => [...prev,...data.posts]);
+        if(data.posts.length < 9 ){
+          setShowMore(false);
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser.isAdmin && userPosts.length > 0 ? (
         <>
-          <Table hoverable className="shadow-md">
+          <Table hoverable className='shadow-md'>
             <Table.Head>
               <Table.HeadCell>Date updated</Table.HeadCell>
               <Table.HeadCell>Post image</Table.HeadCell>
@@ -78,6 +99,11 @@ export default function DashPosts() {
               </Table.Body>
             ))}
           </Table>
+          {showMore && (
+            <button onClick={handleShowMore} className="w-full text-teal-500 self-center text-sm py-7">
+              Show More
+            </button>
+          )}
         </>
       ) : (
         <p>You have no post yest!</p>
