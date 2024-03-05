@@ -4,7 +4,7 @@ import {
   updateUser,
   deleteUser,
   signout,
-  getUsers
+  getUsers,
 } from "../controllers/user.controller.js";
 import { varifyToken } from "../utils/varifyUser.js";
 
