@@ -5,6 +5,7 @@ import {
   deleteUser,
   signout,
   getUsers,
+  getUser,
 } from "../controllers/user.controller.js";
 import { varifyToken } from "../utils/varifyUser.js";
 
@@ -17,5 +18,6 @@ router.put("/update/:userId", varifyToken, updateUser); //user info update route
 router.delete("/delete/:userId", varifyToken, deleteUser); //delete user info using verifiying token
 router.post("/signout", signout);
 router.get("/getusers",varifyToken, getUsers);
+router.get('/:userId', getUser);
 // exporting route
 export default router;
