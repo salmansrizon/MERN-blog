@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Spinner } from "flowbite-react";
+import CallToAction from '../components/CallToAction'
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -83,7 +84,7 @@ export default function PostPage() {
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       ></div>
       <div className="max-w-4xl mx-auto w-full">
-        {/* <CallToAction /> */}
+        <CallToAction />
       </div>
       {/* <CommentSection postId={post._id} /> */}
 
