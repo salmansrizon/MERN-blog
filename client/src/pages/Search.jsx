@@ -2,6 +2,7 @@ import { Button, Select, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCard from "../components/PostCard";
+import ProjectCard from "../components/ProjectCard";
 
 export default function Search() {
   const [sidebarData, setSidebarData] = useState({
@@ -12,6 +13,7 @@ export default function Search() {
 
   console.log(sidebarData);
   const [posts, setPosts] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
@@ -53,6 +55,27 @@ export default function Search() {
       }
     };
     fetchPosts();
+
+    const fetchProjects = async () => {
+      setLoading(true);
+      const searchQuery = urlParams.toString();
+      const res = await fetch(`/api/project/getprojects?${searchQuery}`);
+      if (!res.ok) {
+        setLoading(false);
+        return;
+      }
+      if (res.ok) {
+        const data = await res.json();
+        setProjects(data.projects);
+        setLoading(false);
+        if (data.projects.length === 9) {
+          setShowMore(true);
+        } else {
+          setShowMore(false);
+        }
+      }
+    };
+    fetchProjects();
   }, [location.search]);
 
   const handleChange = (e) => {
@@ -81,18 +104,24 @@ export default function Search() {
 
   const handleShowMore = async () => {
     const numberOfPosts = posts.length;
-    const startIndex = numberOfPosts;
+    const startPostIndex = numberOfPosts;
+    const numberOfProjects = projects.length;
+    const startProjectIndex = numberOfProjects;
     const urlParams = new URLSearchParams(location.search);
-    urlParams.set("startIndex", startIndex);
+    urlParams.set("startPostIndex", startPostIndex);
+    urlParams.set("startProjectIndex", startProjectIndex);
     const searchQuery = urlParams.toString();
-    const res = await fetch(`/api/post/getposts?${searchQuery}`);
-    if (!res.ok) {
+    const resPost = await fetch(`/api/post/getposts?${searchQuery}`);
+    const resProject = await fetch(`/api/post/getposts?${searchQuery}`);
+    if (!resPost.ok && !resProject.ok ) {
       return;
     }
-    if (res.ok) {
-      const data = await res.json();
-      setPosts([...posts, ...data.posts]);
-      if (data.posts.length === 9) {
+    if (resPost.ok && resProject.ok) {
+      const postData = await resPost.json();
+      const projectData = await projectData.json();
+      setPosts([...posts, ...postData.posts]);
+      setProjects([...projects, ...projectData.projects]);
+      if (postData.posts.length === 9 && projectData.projects.length === 9) {
         setShowMore(true);
       } else {
         setShowMore(false);
@@ -153,6 +182,10 @@ export default function Search() {
           {!loading &&
             posts &&
             posts.map((post) => <PostCard key={post._id} post={post} />)}
+            <br />
+            {!loading &&
+            projects &&
+            projects.map((project) => <ProjectCard key={project._id} project={project} />)}
           {showMore && (
             <button
               onClick={handleShowMore}

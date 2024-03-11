@@ -261,6 +261,15 @@ export default function DashProfile() {
             </Link>    
           )
         }
+        {
+          currentUser.isAdmin && (
+            <Link  to = {'/createproject'}>
+              <Button type="button" gradientDuoTone='purpleToPink' className="w-full">
+                Create a Project
+              </Button>
+            </Link>    
+          )
+        }
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span onClick={() => setShowModal(true)} className="curser-pointer">

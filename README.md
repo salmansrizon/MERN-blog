@@ -7,3 +7,6 @@ Main goal of this project is to showcase and demonstarte the learnings of `MERN`
 | `Vite`      | VIte is a build tool that aims to provide a faster and leaner development experience for modern web projects | Frontend Tooling |
 | col 2 is      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |
+
+
+https://github.com/realstoman/react-tailwindcss-portfolio/tree/main

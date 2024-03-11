@@ -14,21 +14,23 @@ import "react-circular-progressbar/dist/styles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export default function UpdatePost() {
+export default function UpdateProject() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
-  const { postId } = useParams();
+  const { projectId } = useParams();
 
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     try {
-      const fetchPost = async () => {
-        const res = await fetch(`/api/post/getposts?postId=${postId}`);
+      const fetchProject = async () => {
+        const res = await fetch(
+          `/api/project/getprojects?projectId=${projectId}`
+        );
         const data = await res.json();
         if (!res.ok) {
           console.log(data.message);
@@ -37,15 +39,15 @@ export default function UpdatePost() {
         }
         if (res.ok) {
           setPublishError(null);
-          setFormData(data.posts[0]);
+          setFormData(data.projects[0]);
         }
       };
 
-      fetchPost();
+      fetchProject();
     } catch (error) {
       console.log(error.message);
     }
-  }, [postId]);
+  }, [projectId]);
 
   const handleUpdloadImage = async () => {
     try {
@@ -83,12 +85,11 @@ export default function UpdatePost() {
       console.log(error);
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await fetch(
-        `/api/post/updatepost/${formData._id}/${currentUser._id}`,
+        `/api/project/updateproject/${formData._id}/${currentUser._id}`,
         {
           method: "PUT",
           headers: {
@@ -105,7 +106,7 @@ export default function UpdatePost() {
 
       if (res.ok) {
         setPublishError(null);
-        navigate(`/post/${data.slug}`);
+        navigate(`/project/${data.slug}`);
       }
     } catch (error) {
       setPublishError("Something went wrong");
@@ -113,7 +114,9 @@ export default function UpdatePost() {
   };
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
-      <h1 className="text-center text-3xl my-7 font-semibold">Update post</h1>
+      <h1 className="text-center text-3xl my-7 font-semibold">
+        Update project
+      </h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
           <TextInput
@@ -184,7 +187,7 @@ export default function UpdatePost() {
           }}
         />
         <Button type="submit" gradientDuoTone="purpleToPink">
-          Update post
+          Update project
         </Button>
         {publishError && (
           <Alert className="mt-5" color="failure">
